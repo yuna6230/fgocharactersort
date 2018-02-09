@@ -1,0 +1,712 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>FGO從者喜好排名</title>
+<script type="text/javascript">
+<!--
+//*********************************************************
+//
+// 評価するメンバーの名前のリスト
+//
+// この部分を変更して下さい。名前の削除・追加も可能です。
+// 名前を引用符(")で括り、コンマ(,)で区切って下さい。
+// 但し、リストの最後にはコンマを入れてはいけません。
+//
+//*********************************************************
+var namMember = new Array(
+"瑪修・基利艾拉特",
+"阿爾托莉亞・潘德拉剛",
+"阿爾托莉亞・潘德拉剛〔Alter〕",
+"阿爾托莉亞・潘德拉剛〔Lily〕",
+"尼祿・克勞狄烏斯",
+"齊格飛",
+"蓋烏斯・尤利烏斯・凱撒",
+"阿提拉",
+"吉爾・德・雷",
+"夏爾・德翁",
+"Emiya",
+"吉爾伽美什",
+"羅賓漢",
+"阿塔蘭塔",
+"尤瑞艾莉",
+"阿拉什",
+"庫．夫林",
+"伊莉莎白．巴托里",
+"武藏坊弁慶",
+"庫・夫林〔Prototype〕",
+"雷奧尼達一世",
+"羅慕路斯",
+"美社莎",
+"聖喬治",
+"愛德華．蒂奇",
+"布狄卡",
+"牛若丸",
+"亞歷山大",
+"瑪莉．安東尼",
+"瑪爾大",
+"美狄亞",
+"吉爾．德．雷",
+"漢斯・克里斯蒂安・安徒生",
+"威廉・莎士比亞",
+"梅菲斯托費勒斯",
+"沃夫岡・阿瑪迪斯・莫札特",
+"諸葛孔明〔埃爾梅羅II世〕",
+"庫．夫林〔Caster〕",
+"佐佐木小次郎",
+"咒腕的哈桑",
+"絲西娜",
+"荊軻",
+"夏爾＝亨利・桑松",
+"歌劇魅影",
+"瑪塔・哈里",
+"卡米拉",
+"海克力斯",
+"蘭斯洛特〔Berserker〕",
+"呂布奉先",
+"斯巴達克斯",
+"坂田金時",
+"弗拉德三世",
+"阿斯忒里歐",
+"卡利古拉",
+"大流士三世",
+"清姬",
+"血斧・埃里克",
+"玉藻貓",
+"貞德",
+"俄里翁",
+"玉藻前",
+"大衛",
+"赫克特",
+"弗朗西斯・德雷克",
+"安妮・伯妮＆瑪莉・瑞德",
+"美狄亞〔Lily〕",
+"沖田總司",
+"織田信長",
+"斯卡哈",
+"迪爾姆德・奧德利暗",
+"弗格斯・馬克・羅伊",
+"童謠",
+"開膛手傑克",
+"莫德雷德",
+"尼古拉・特斯拉",
+"阿爾托莉亞・潘德拉剛〔槍〕〔Alter〕",
+"馮・霍恩海姆・帕拉塞爾斯",
+"查爾斯・巴貝奇",
+"亨利・傑基爾＆海德",
+"弗蘭肯斯坦",
+"阿周那",
+"迦爾納",
+"謎之女主角X",
+"芬恩・麥克庫爾",
+"布倫希爾德",
+"貝奧武夫",
+"兩儀式〔Saber〕",
+"兩儀式",
+"天草四郎",
+"阿斯托爾福",
+"子吉爾",
+"巖窟王",
+"南丁格爾",
+"庫・夫林〔Alter〕",
+"女王梅芙",
+"海倫娜・布拉瓦茨基",
+"羅摩",
+"李書文",
+"湯瑪斯・愛迪生",
+"傑羅尼莫",
+"比利小子",
+"貞德〔Alter〕",
+"安格拉曼紐",
+"伊斯坎達爾",
+"Emiya〔Assassin〕",
+"百貌的哈桑",
+"愛麗絲菲爾〔天之衣〕",
+"酒吞童子",
+"玄奘三藏",
+"源頼光",
+"茨木童子",
+"風魔小太郎",
+"奧茲曼迪亞斯",
+"阿爾托莉亞・潘德拉剛〔槍〕",
+"尼托克里絲",
+"蘭斯洛特",
+"崔斯坦",
+"高文",
+"靜謐的哈桑",
+"俵藤太",
+"貝德維爾",
+"李奧納多・達文西",
+"伊莉雅絲菲爾・馮・愛因茲貝倫",
+"克洛伊・馮・愛因茲貝倫",
+"克麗奧佩脫拉",
+"弗拉德三世〔EXTRA〕",
+"貞德・Alter・聖誕・Lily",
+"伊絲塔",
+"恩奇都",
+"魁札爾・科亞特爾",
+"吉爾伽美什〔Caster〕",
+"美杜莎〔Lily〕",
+"戈爾貢",
+"豹人",
+"梅林",
+"宮本武藏",
+"“山之翁”",
+"謎之女主角X〔Alter〕",
+"詹姆斯・莫里亞蒂",
+"Emiya〔Alter〕",
+"海森・羅伯",
+"燕青",
+"亞瑟・潘德拉剛〔Prototype〕",
+"土方歲三",
+"茶茶",
+"Meltlilith",
+"Passionlip",
+"鈴鹿御前",
+"BB",
+"殺生院祈荒",
+"雪赫拉莎德",
+"武則天",
+"彭忒西勒亞",
+"克里斯多福・哥倫布",
+"夏洛克・福爾摩斯",
+"保羅・班揚",
+"帕爾瓦蒂",
+"巴御前",
+"望月千代女",
+"寶藏院胤舜",
+"柳生但馬守宗矩",
+"加藤段藏",
+"刑部姬",
+"機械伊莉醬",
+"機械伊莉醬Ⅱ號機",
+"喀耳刻",
+"哪吒",
+"示巴女王",
+"阿比蓋爾・威廉斯",
+"艾蕾修卡",
+"葛飾北齋",
+"賽米拉米斯",
+
+
+);
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishFlag;
+
+//変数の初期化+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+	var n = 0;
+	var mid;
+	var i;
+
+	//ソートすべき配列
+	lstMember[n] = new Array();
+	for (i=0; i<namMember.length; i++) {
+		lstMember[n][i] = i;
+	}
+	parent[n] = -1;
+	totalSize = 0;
+	n++;
+
+	for (i=0; i<lstMember.length; i++) {
+		//要素数が２以上なら２分割し、
+		//分割された配列をlstMemberの最後に加える
+		if(lstMember[i].length>=2) {
+			mid = Math.ceil(lstMember[i].length/2);
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(0,mid);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+		}
+	}
+
+	//保存用配列
+	for (i=0; i<namMember.length; i++) {
+		rec[i] = 0;
+	}
+	nrec = 0;
+
+	//引き分けの結果を保存するリスト
+	//キー：リンク始点の値
+	// 値 ：リンク終点の値
+	for (i=0; i<=namMember.length; i++) {
+		equal[i] = -1;
+	}
+
+	cmp1 = lstMember.length-2;
+	cmp2 = lstMember.length-1;
+	head1 = 0;
+	head2 = 0;
+	numQuestion = 1;
+	finishSize = 0;
+	finishFlag = 0;
+}
+
+//リストのソート+++++++++++++++++++++++++++++++++++++++++++
+//flag：比較結果
+//  -1：左を選択
+//   0：引き分け
+//   1：右を選択
+function sortList(flag){
+	var i;
+	var str;
+
+	//recに保存
+	if (flag<0) {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (flag>0) {
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+		equal[rec[nrec-1]] = lstMember[cmp2][head2];
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//片方のリストを走査し終えた後の処理
+	if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		//リストcmp2が走査済 - リストcmp1の残りをコピー
+		while (head1<lstMember[cmp1].length){
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+		//リストcmp1が走査済 - リストcmp2の残りをコピー
+		while (head2<lstMember[cmp2].length){
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//両方のリストの最後に到達した場合は
+	//親リストを更新する
+	if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+			lstMember[parent[cmp1]][i] = rec[i];
+		}
+		lstMember.pop();
+		lstMember.pop();
+		cmp1 = cmp1-2;
+		cmp2 = cmp2-2;
+		head1 = 0;
+		head2 = 0;
+
+		//新しい比較を行う前にrecを初期化
+		if (head1==0 && head2==0) {
+			for (i=0; i<namMember.length; i++) {
+				rec[i] = 0;
+			}
+			nrec = 0;
+		}
+	}
+
+	if (cmp1<0) {
+		str = "Battle No."+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+		document.getElementById("battleNumber").innerHTML = str;
+
+		showResult();
+		finishFlag = 1;
+	}
+	else {
+		showImage();
+	}
+}
+
+//結果の表示+++++++++++++++++++++++++++++++++++++++++++++++
+function showResult() {
+	var ranking = 1;
+	var sameRank = 1;
+	var str = "";
+	var i;
+
+	str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #000; border-collapse:collapse\" align=\"center\">";
+	str += "<tr><td style=\"color:#ffffff; background-color:#000; text-align:center;\">順位<\/td><td style=\"color:#ffffff; background-color:#000; text-align:center;\">名前<\/td><\/tr>";
+
+	for (i=0; i<namMember.length; i++) {
+		str += "<tr><td style=\"border:1px solid #000; text-align:right; padding-right:5px;\">"+ranking+"<\/td><td style=\"border:1px solid #000; padding-left:5px;\">"+namMember[lstMember[0][i]]+"<\/td><\/tr>";
+		if (i<namMember.length-1) {
+			if (equal[lstMember[0][i]]==lstMember[0][i+1]) {
+				sameRank++;
+			} else {
+				ranking += sameRank;
+				sameRank = 1;
+			}
+		}
+	}
+	str += "<\/table>";
+
+	document.getElementById("resultField").innerHTML = str;
+}
+
+//比較する２つ要素の表示+++++++++++++++++++++++++++++++++++
+function showImage() {
+	var str0 = "Battle No."+numQuestion+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+	var str1 = ""+toNameFace(lstMember[cmp1][head1]);
+	var str2 = ""+toNameFace(lstMember[cmp2][head2]);
+
+	document.getElementById("battleNumber").innerHTML = str0;
+	document.getElementById("leftField").innerHTML = str1;
+	document.getElementById("rightField").innerHTML = str2;
+
+	numQuestion++;
+}
+
+//数値を名前（顔文字）に変換+++++++++++++++++++++++++++++++
+function toNameFace(n){
+
+	var str = namMember[n];
+
+	//顔文字を追加する場合は以下のコメントアウトを外す
+	//namMemberのインデックスと矛盾しないように注意
+	str += "<br>";
+	switch(n) {
+
+
+
+case 0 : str += "<img src=\"img001.png\">";break;
+case 1 : str += "<img src=\"img002.png\">";break;
+case 2 : str += "<img src=\"img003.png\">";break;
+case 3 : str += "<img src=\"img004.png\">";break;
+case 4 : str += "<img src=\"img005.png\">";break;
+case 5 : str += "<img src=\"img006.png\">";break;
+case 6 : str += "<img src=\"img007.png\">";break;
+case 7 : str += "<img src=\"img008.png\">";break;
+case 8 : str += "<img src=\"img009.png\">";break;
+case 9 : str += "<img src=\"img010.png\">";break;
+case 10 : str += "<img src=\"img011.png\">";break;
+case 11 : str += "<img src=\"img012.png\">";break;
+case 12 : str += "<img src=\"img013.png\">";break;
+case 13 : str += "<img src=\"img014.png\">";break;
+case 14 : str += "<img src=\"img015.png\">";break;
+case 15 : str += "<img src=\"img016.png\">";break;
+case 16 : str += "<img src=\"img017.png\">";break;
+case 17 : str += "<img src=\"img018.png\">";break;
+case 18 : str += "<img src=\"img019.png\">";break;
+case 19 : str += "<img src=\"img020.png\">";break;
+case 20 : str += "<img src=\"img021.png\">";break;
+case 21 : str += "<img src=\"img022.png\">";break;
+case 22 : str += "<img src=\"img023.png\">";break;
+case 23 : str += "<img src=\"img024.png\">";break;
+case 24 : str += "<img src=\"img025.png\">";break;
+case 25 : str += "<img src=\"img026.png\">";break;
+case 26 : str += "<img src=\"img027.png\">";break;
+case 27 : str += "<img src=\"img028.png\">";break;
+case 28 : str += "<img src=\"img029.png\">";break;
+case 29 : str += "<img src=\"img030.png\">";break;
+case 30 : str += "<img src=\"img031.png\">";break;
+case 31 : str += "<img src=\"img032.png\">";break;
+case 32 : str += "<img src=\"img033.png\">";break;
+case 33 : str += "<img src=\"img034.png\">";break;
+case 34 : str += "<img src=\"img035.png\">";break;
+case 35 : str += "<img src=\"img036.png\">";break;
+case 36 : str += "<img src=\"img037.png\">";break;
+case 37 : str += "<img src=\"img038.png\">";break;
+case 38 : str += "<img src=\"img039.png\">";break;
+case 39 : str += "<img src=\"img040.png\">";break;
+case 40 : str += "<img src=\"img041.png\">";break;
+case 41 : str += "<img src=\"img042.png\">";break;
+case 42 : str += "<img src=\"img043.png\">";break;
+case 43 : str += "<img src=\"img044.png\">";break;
+case 44 : str += "<img src=\"img045.png\">";break;
+case 45 : str += "<img src=\"img046.png\">";break;
+case 46 : str += "<img src=\"img047.png\">";break;
+case 47 : str += "<img src=\"img048.png\">";break;
+case 48 : str += "<img src=\"img049.png\">";break;
+case 49 : str += "<img src=\"img050.png\">";break;
+case 50 : str += "<img src=\"img051.png\">";break;
+case 51 : str += "<img src=\"img052.png\">";break;
+case 52 : str += "<img src=\"img053.png\">";break;
+case 53 : str += "<img src=\"img054.png\">";break;
+case 54 : str += "<img src=\"img055.png\">";break;
+case 55 : str += "<img src=\"img056.png\">";break;
+case 56 : str += "<img src=\"img057.png\">";break;
+case 57 : str += "<img src=\"img058.png\">";break;
+case 58 : str += "<img src=\"img059.png\">";break;
+case 59 : str += "<img src=\"img060.png\">";break;
+case 60 : str += "<img src=\"img061.png\">";break;
+case 61 : str += "<img src=\"img062.png\">";break;
+case 62 : str += "<img src=\"img063.png\">";break;
+case 63 : str += "<img src=\"img064.png\">";break;
+case 64 : str += "<img src=\"img065.png\">";break;
+case 65 : str += "<img src=\"img066.png\">";break;
+case 66 : str += "<img src=\"img067.png\">";break;
+case 67 : str += "<img src=\"img068.png\">";break;
+case 68 : str += "<img src=\"img069.png\">";break;
+case 69 : str += "<img src=\"img070.png\">";break;
+case 70 : str += "<img src=\"img071.png\">";break;
+case 71 : str += "<img src=\"img072.png\">";break;
+case 72 : str += "<img src=\"img073.png\">";break;
+case 73 : str += "<img src=\"img074.png\">";break;
+case 74 : str += "<img src=\"img075.png\">";break;
+case 75 : str += "<img src=\"img076.png\">";break;
+case 76 : str += "<img src=\"img077.png\">";break;
+case 77 : str += "<img src=\"img078.png\">";break;
+case 78 : str += "<img src=\"img079.png\">";break;
+case 79 : str += "<img src=\"img080.png\">";break;
+case 80 : str += "<img src=\"img081.png\">";break;
+case 81 : str += "<img src=\"img082.png\">";break;
+case 82 : str += "<img src=\"img083.png\">";break;
+case 83 : str += "<img src=\"img084.png\">";break;
+case 84 : str += "<img src=\"img085.png\">";break;
+case 85 : str += "<img src=\"img086.png\">";break;
+case 86 : str += "<img src=\"img087.png\">";break;
+case 87 : str += "<img src=\"img088.png\">";break;
+case 88 : str += "<img src=\"img089.png\">";break;
+case 89 : str += "<img src=\"img090.png\">";break;
+case 90 : str += "<img src=\"img091.png\">";break;
+case 91 : str += "<img src=\"img092.png\">";break;
+case 92 : str += "<img src=\"img093.png\">";break;
+case 93 : str += "<img src=\"img094.png\">";break;
+case 94 : str += "<img src=\"img095.png\">";break;
+case 95 : str += "<img src=\"img096.png\">";break;
+case 96 : str += "<img src=\"img097.png\">";break;
+case 97 : str += "<img src=\"img098.png\">";break;
+case 98 : str += "<img src=\"img099.png\">";break;
+case 99 : str += "<img src=\"img100.png\">";break;
+case 100 : str += "<img src=\"img101.png\">";break;
+case 101 : str += "<img src=\"img102.png\">";break;
+case 102 : str += "<img src=\"img103.png\">";break;
+case 103 : str += "<img src=\"img104.png\">";break;
+case 104 : str += "<img src=\"img105.png\">";break;
+case 105 : str += "<img src=\"img106.png\">";break;
+case 106 : str += "<img src=\"img107.png\">";break;
+case 107 : str += "<img src=\"img108.png\">";break;
+case 108 : str += "<img src=\"img109.png\">";break;
+case 109 : str += "<img src=\"img110.png\">";break;
+case 110 : str += "<img src=\"img111.png\">";break;
+case 111 : str += "<img src=\"img112.png\">";break;
+case 112 : str += "<img src=\"img113.png\">";break;
+case 113 : str += "<img src=\"img114.png\">";break;
+case 114 : str += "<img src=\"img115.png\">";break;
+case 115 : str += "<img src=\"img116.png\">";break;
+case 116 : str += "<img src=\"img117.png\">";break;
+case 117 : str += "<img src=\"img118.png\">";break;
+case 118 : str += "<img src=\"img119.png\">";break;
+case 119 : str += "<img src=\"img120.png\">";break;
+case 120 : str += "<img src=\"img121.png\">";break;
+case 121 : str += "<img src=\"img122.png\">";break;
+case 122 : str += "<img src=\"img123.png\">";break;
+case 123 : str += "<img src=\"img124.png\">";break;
+case 124 : str += "<img src=\"img125.png\">";break;
+case 125 : str += "<img src=\"img126.png\">";break;
+case 126 : str += "<img src=\"img127.png\">";break;
+case 127 : str += "<img src=\"img128.png\">";break;
+case 128 : str += "<img src=\"img129.png\">";break;
+case 129 : str += "<img src=\"img130.png\">";break;
+case 130 : str += "<img src=\"img131.png\">";break;
+case 131 : str += "<img src=\"img132.png\">";break;
+case 132 : str += "<img src=\"img133.png\">";break;
+case 133 : str += "<img src=\"img134.png\">";break;
+case 134 : str += "<img src=\"img135.png\">";break;
+case 135 : str += "<img src=\"img136.png\">";break;
+case 136 : str += "<img src=\"img137.png\">";break;
+case 137 : str += "<img src=\"img138.png\">";break;
+case 138 : str += "<img src=\"img139.png\">";break;
+case 139 : str += "<img src=\"img140.png\">";break;
+case 140 : str += "<img src=\"img141.png\">";break;
+case 141 : str += "<img src=\"img142.png\">";break;
+case 142 : str += "<img src=\"img143.png\">";break;
+case 143 : str += "<img src=\"img144.png\">";break;
+case 144 : str += "<img src=\"img145.png\">";break;
+case 145 : str += "<img src=\"img146.png\">";break;
+case 146 : str += "<img src=\"img147.png\">";break;
+case 147 : str += "<img src=\"img148.png\">";break;
+case 148 : str += "<img src=\"img149.png\">";break;
+case 149 : str += "<img src=\"img150.png\">";break;
+case 150 : str += "<img src=\"img151.png\">";break;
+case 151 : str += "<img src=\"img152.png\">";break;
+case 152 : str += "<img src=\"img153.png\">";break;
+case 153 : str += "<img src=\"img154.png\">";break;
+case 154 : str += "<img src=\"img155.png\">";break;
+case 155 : str += "<img src=\"img156.png\">";break;
+case 156 : str += "<img src=\"img157.png\">";break;
+case 157 : str += "<img src=\"img158.png\">";break;
+case 158 : str += "<img src=\"img159.png\">";break;
+case 159 : str += "<img src=\"img160.png\">";break;
+case 160 : str += "<img src=\"img161.png\">";break;
+case 161 : str += "<img src=\"img162.png\">";break;
+case 162 : str += "<img src=\"img163.png\">";break;
+case 163 : str += "<img src=\"img164.png\">";break;
+case 164 : str += "<img src=\"img165.png\">";break;
+case 165 : str += "<img src=\"img166.png\">";break;
+case 166 : str += "<img src=\"img167.png\">";break;
+case 167 : str += "<img src=\"img168.png\">";break;
+case 168 : str += "<img src=\"img169.png\">";break;
+case 169 : str += "<img src=\"img170.png\">";break;
+case 170 : str += "<img src=\"img171.png\">";break;
+case 171 : str += "<img src=\"img172.png\">";break;
+
+
+
+	default: str+=""+n;
+	}
+	return str;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+/**********************************************************
+
+ 表のスタイルを変更する場合はここを編集してください。
+
+**********************************************************/
+#mainTable{
+	font-size: 13px;
+	font-family: 'ＭＳ Ｐゴシック',sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	width: 462px;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: separate;
+	border-spacing: 10px 5px;
+}
+#leftField{
+	width: 120px;
+	height: 150px;
+	border: 1px solid #000;
+}
+#rightField{
+	width: 120px;
+	height: 150px;
+	border: 1px solid #000;
+}
+.middleField{
+	width: 96px;
+	height: 70px;
+	border: 1px solid #000;
+}
+//body,td,th {
+	font-family: roboto;
+	font-style: normal;
+	font-weight: 200;
+}
+body,td,th {
+	font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", serif;
+	font-weight: 400;
+	color: #40495A;
+}
+body {
+	background-color: #FFFFFF;
+	background-image: url(agsquare.png);
+	background-repeat: repeat;
+}
+-->
+</style>
+<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
+<script>var __adobewebfontsappname__="dreamweaver"</script>
+<script src="http://use.edgefonts.net/roboto:n2:default;righteous:n4:default.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+<div align="center"><b>《Fate/Grand Order》從者喜好排名測試</b></div>
+<br>
+<table align="center" id="mainTable">
+<tbody>
+<tr>
+<td id="battleNumber" style="padding-bottom: 10px;" colspan="3">?</td>
+</tr>
+<tr>
+<td id="leftField" onclick="if(finishFlag==0)sortList(-1);" rowspan="2">?</td>
+<td class="middleField" onclick="if(finishFlag==0)sortList(0);">一樣喜歡</td>
+<td id="rightField" onclick="if(finishFlag==0)sortList(1);" rowspan="2">?</td>
+</tr>
+<tr>
+<td class="middleField" onclick="if(finishFlag==0)sortList(0);">都無感qq</td>
+</tr>
+</tbody>
+</table>
+<p><br /><br /></p>
+<div id="resultField" style="text-align: center;"><span style="font-size: 10pt;">
+<p><b>從者眾多，本測驗將會花費非常長的時間。</b><br><br>
+每回合請選出比較喜歡的從者並點下去。<br>
+實在選不了請戳「都喜歡」或是「都無感」。</p>
+ <p>僅加入了可召喚的從者，並無其他劇情角色。<br>
+ 	收錄的從者數目： 172 名<br>
+ 	※去除了人設上無太大差異的重複性從者（如泳裝、4星特別版等）。
+ </p>
+ 測試結果沒有圖片只有文字。
+ <br>
+  <p>2018.2.9<br>
+  </p>
+ <P>代碼來源→ <a href="http://charasorts.web.fc2.com/index.html" target="_blank">CharasortS</a><br></p>
+ </div>
+<script>// <![CDATA[
+initList();
+	showImage();
+// ]]></script>
+<script type="text/javascript"><!--
+var fc2footerparam = 'charset=' + (document.charset ? document.charset : document.characterSet) + '&url=' + document.location + '&service=0&r=' + Math.floor(Math.random()*99999999999);
+var fc2footertag = '<' + 'script src="//vip.chps-api.fc2.com/apis/footer/?' + fc2footerparam + '" charset="UTF-8"><' + '/script>';
+document.write(fc2footertag);
+//--></script>
+<!-- FC2, inc.-->
+<img src="//media.fc2.com/counter_img.php?id=50" style="visibility:hidden" alt="inserted by FC2 system" width="0" height="0">
+<!-- FC2, inc.-->
+</body>
+</html>
